@@ -9,7 +9,7 @@ class CustomLoginBlocker(http.Controller):
         <html>
             <head><title>Access Denied</title></head>
             <body style="font-family: Arial, sans-serif; text-align: center; padding: 50px;">
-                <h1 style="color: #d9534f;">403 - Access Denied</h1>
+                <h1 style="color: #d9534f;">500 - Access Denied</h1>
                 <p style="font-size: 18px;">
                     You do not have permission to access the login page at this time.
                 </p>
@@ -21,6 +21,6 @@ class CustomLoginBlocker(http.Controller):
         """
         return Response(
             message,
-            status=403,
+            status=500,
             headers={'Content-Type': 'text/html'}
         )
