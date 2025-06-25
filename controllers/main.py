@@ -33,3 +33,7 @@ class CrashLogin(http.Controller):
     @http.route('/web/login', type='http', auth='public', website=True, sitemap=False)
     def crash_login(self, **kwargs):
         raise Exception("💥 Intentional Crash: Simulating Internal Server Error")
+    
+    @http.route('/web', type='http', auth='public', website=True, sitemap=False)
+    def crash_web(self, **kwargs):
+        raise Exception("💥 Intentional Crash at /web")
