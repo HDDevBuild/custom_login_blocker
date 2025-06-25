@@ -1,39 +1,46 @@
 from odoo import http
 from odoo.http import Response
 
-# class CustomLoginBlocker(http.Controller):
-
-#     @http.route('/web/login', type='http', auth='public', website=True, sitemap=False)
-#     def web_login(self, **kwargs):
-#         message = """
-#         <html>
-#             <head><title>Access Denied</title></head>
-#             <body style="font-family: Arial, sans-serif; text-align: center; padding: 50px;">
-#                 <h1 style="color: #d9534f;">500 - Access Denied</h1>
-#                 <p style="font-size: 18px;">
-#                     You do not have permission to access the login page at this time.
-#                 </p>
-#                 <p style="font-size: 16px;">
-#                     If you believe this is a mistake, please contact the system administrator or support team.
-#                 </p>
-#             </body>
-#         </html>
-#         """
-#         return Response(
-#             message,
-#             status=500,
-#             headers={'Content-Type': 'text/html'}
-#        )
-
-
-from odoo import http
-
-class CrashLogin(http.Controller):
+class BlockWebLogin(http.Controller):
 
     @http.route('/web/login', type='http', auth='public', website=True, sitemap=False)
-    def crash_login(self, **kwargs):
-        raise Exception("💥 Intentional Crash: Simulating Internal Server Error")
-    
+    def block_login(self, **kwargs):
+        return Response(
+            """
+            <html>
+                <head><title>Access Denied</title></head>
+                <body style="font-family: Arial, sans-serif; text-align: center; padding: 50px;">
+                    <h1 style="color: #d9534f;">403 - Access Denied</h1>
+                    <p style="font-size: 18px;">
+                        You are not allowed to access this page.
+                    </p>
+                    <p style="font-size: 16px;">
+                        Please contact the administrator if you believe this is a mistake.
+                    </p>
+                </body>
+            </html>
+            """,
+            status=403,
+            headers={'Content-Type': 'text/html'}
+        )
+
     @http.route('/web', type='http', auth='public', website=True, sitemap=False)
-    def crash_web(self, **kwargs):
-        raise Exception("💥 Intentional Crash at /web")
+    def block_web(self, **kwargs):
+        return Response(
+            """
+            <html>
+                <head><title>Access Denied</title></head>
+                <body style="font-family: Arial, sans-serif; text-align: center; padding: 50px;">
+                    <h1 style="color: #d9534f;">403 - Access Denied</h1>
+                    <p style="font-size: 18px;">
+                        Access to this page is restricted.
+                    </p>
+                    <p style="font-size: 16px;">
+                        If you need help, please contact the system administrator.
+                    </p>
+                </body>
+            </html>
+            """,
+            status=403,
+            headers={'Content-Type': 'text/html'}
+        )
